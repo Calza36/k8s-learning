@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-pod
+  labels:
+    app: hello
+spec:
+  containers:
+  - name: hello-container
+    image: hashicorp/http-echo:0.2.3
+    args:
+      - "-text=Hello Calza36 from Pod, I hope you are doing well!"
+    ports:
+      - containerPort: 5678
+    resources:  # Al parecer se recomienda definir los recursos de los contenedores para poner limites y no saturar el nodo
+      limits:
+        memory: "128Mi"  # Aproximadamente 134.22 MB
+        cpu: "500m"      # 0.5 núcleos de CPU
+      requests:
+        memory: "64Mi"   # Aproximadamente 67.11 MB
+        cpu: "250m"      # 0.25 núcleos de CPU
