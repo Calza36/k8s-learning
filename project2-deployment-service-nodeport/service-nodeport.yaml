@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-nodeport
+spec:
+  selector:
+    app: hello
+  ports:
+    - port: 80
+      targetPort: 5678
+      nodePort: 30080
+  type: NodePort
+
+# to be able to connect to this service, normally we will use http:<minikube-ip>:<nodeport> , but as we are using minikube in our WSL and we are using Docker Desktop, we need to apply minikube tunnel, and then ask for "minikube service hello-nodeport --url" to get the URL to connect to the service.

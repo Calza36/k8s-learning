@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - name: hello-container
+        image: hashicorp/http-echo:0.2.3
+        args:
+          - "-text=Hello from Deployment Calza36 :) "
+        ports:
+          - containerPort: 5678
+       
