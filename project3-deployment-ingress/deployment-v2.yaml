@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: rolling
-  strategy:
+  strategy:  
     type: RollingUpdate
   template:
     metadata:
@@ -21,3 +21,10 @@ spec:
           - "-text=VERSION 2"
         ports:
           - containerPort: 5678
+
+#Explain the changes you made to the deployment file
+# The deployment file was updated to use a new image version (0.2.3) and a new text message ("VERSION 2") in the container args.
+# The deployment strategy was also updated to RollingUpdate to ensure that the new version of the container is rolled out gradually.
+# This will help to minimize downtime and ensure that the application remains available during the deployment process.
+# Other way to do it is to use the command kubectl set image deployment/rolling-deploy rolling-container=hashicorp/http-echo:0.2.3 args="-text=VERSION 2" --record
+# another way to do deployment different that RollinUpdate is Recreate, but this will cause downtime during the deployment process.

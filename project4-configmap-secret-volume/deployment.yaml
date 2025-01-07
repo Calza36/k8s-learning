@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: config-app
+  template:
+    metadata:
+      labels:
+        app: config-app
+    spec:
+      containers:
+      - name: config-container
+        image: busybox
+        command: ["sh", "-c"]
+        args:
+          - |
+            echo "Starting with config...";
+            echo "APP_MESSAGE: $APP_MESSAGE";
+            echo "DB_PASSWORD: $DB_PASSWORD";
+            echo "Reading config from /etc/app/config.txt: $(cat /etc/app/config.txt)";
+            sleep 3600;
+        env:
+        - name: APP_MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: my-config
+              key: APP_MESSAGE
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: DB_PASSWORD
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/app
+      volumes:
+      - name: config-volume
+        configMap:
+          name: my-config
+          items:
+            - key: APP_MESSAGE
+              path: config.txt
