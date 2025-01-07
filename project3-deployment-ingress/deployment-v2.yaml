@@ -21,6 +21,13 @@ spec:
           - "-text=VERSION 2"
         ports:
           - containerPort: 5678
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
 
 #Explain the changes you made to the deployment file
 # The deployment file was updated to use a new image version (0.2.3) and a new text message ("VERSION 2") in the container args.
