@@ -1,0 +1,13 @@
+# this is a PersistentVolumeClaim (PVC) file
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce # solo puede ser montado por un nodo a la vez, otras opciones son ReadWriteMany y ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard  # my-local-storage  # o "standard" en minikube si existe

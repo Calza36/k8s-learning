@@ -1,0 +1,7 @@
+#En Minikube, existe la StorageClass standard con un hostPath provisioner. Pero si quisieras definirla manualmente: 
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: my-local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
